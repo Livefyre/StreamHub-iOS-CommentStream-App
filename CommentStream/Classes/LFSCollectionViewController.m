@@ -12,7 +12,7 @@
 #import <StreamHub-iOS-SDK/LFSClient.h>
 #import <AFNetworking/AFURLResponseSerialization.h>
 #import <UIImage+Resize/UIImage+Resize.h>
-
+#import <Base64/MF_Base64Additions.h>
 #import <objc/runtime.h>
 
 #import "LFSViewResources.h"
@@ -32,7 +32,7 @@
 #import "LFSAttributedLabelDelegate.h"
 #import "UIColor+CommentStream.h"
 
-@interface LFSCollectionViewController ()
+@interface LFSCollectionViewController ()<LFAuthenticationDelegate>
 @property (nonatomic, strong) LFSContentCollection *content;
 
 @property (nonatomic, readonly) LFSBootstrapClient *bootstrapClient;
@@ -261,9 +261,75 @@ const static char kAttributedTextValueKey;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    if([_collection valueForKey:@"needLogin"]){
+        [self setRightBarFromStatus];
+    }
+    NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"lftoken"];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+
+    if(token){
+        [dict setValue:token forKey:@"lftoken"];
+    }
+    _collection = [[NSDictionary alloc] initWithDictionary:dict];
     [self authenticateUser];
     [self startStreamWithBoostrap];
+}
+-(void)setRightBarFromStatus{
+    if([_collection valueForKey:@"needLogin"]){
+        NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"lftoken"];
+        if(token){
+            [self setRightBarWithName:@"Logout"];
+        }else{
+            [self setRightBarWithName:@"Login"];
+        }
+    }else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+
+}
+
+-(void)setRightBarWithName:(NSString*)status{
+    UIButton *btnRight = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnRight setFrame:CGRectMake(0, 0, 80, 44)];
+    [btnRight setTitle:status  forState:UIControlStateNormal];
+    [btnRight setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    if([status isEqualToString:@"Login"]){
+        [btnRight addTarget:self action:@selector(callAuth:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [btnRight addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    }
+    UIBarButtonItem *barBtnRight = [[UIBarButtonItem alloc] initWithCustomView:btnRight];
+    self.navigationItem.rightBarButtonItem = barBtnRight;
+}
+-(void)logout{
+
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"lftoken"];
+    [dict removeObjectForKey:@"lftoken"];
+    _collection = [[NSDictionary alloc]initWithDictionary:dict];
+    [self setRightBarFromStatus];
+}
+/*
+ <key>environment</key>
+ <string>qa-ext.livefyre.com</string>
+ <key>network</key>
+ <string>qa-blank.fyre.co</string>
+ <key>siteId</key>
+ <string>291345</string>
+ <key>articleId</key>
+ <string>designer-app-1444956522234</string>
+ */
+
+-(void)callAuth:(UIButton*)sender{
+    NSString *environment = [_collection valueForKey:@"environment"];
+    NSString *network = [_collection valueForKey:@"network"];
+    NSString *next = [_collection valueForKey:@"next"];
+
+    LFAuthViewController *avc =[[LFAuthViewController alloc] initWithEnvironment:environment network:network next:next];
+    avc.delegate=self;
+    [self presentViewController:avc animated:YES completion:^{
+        
+    }];
 }
 
 
@@ -1065,4 +1131,25 @@ const static char kAttributedTextValueKey;
              withAuthors:[responseObject objectForKey:@"authors"]];
 }
 
+-(void)didReceiveLFAuthToken:(id)profile{
+    NSLog(@"%@",profile);
+    NSData *data = [NSData dataWithBase64String:profile];
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
+                                                           error:&error];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+    if([json valueForKey:@"token"]){
+        [[NSUserDefaults standardUserDefaults] setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
+        [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
+    }
+    _collection = [[NSDictionary alloc]initWithDictionary:dict];
+    [self setRightBarFromStatus];
+
+}
+-(void)didFailLFRequest{
+    NSLog(@"Fail");
+    [self setRightBarFromStatus];
+
+}
 @end
