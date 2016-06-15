@@ -665,9 +665,21 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)postClicked:(UIBarButtonItem *)sender
-{
-    [self postContent];
+- (IBAction)postClicked:(UIBarButtonItem *)sender{
+    NSString *userToken = [self.collection objectForKey:@"lftoken"];
+    if (userToken != nil) {
+        static NSString* const kFailurePostTitle = @"Failed to post content";
+        
+        [[[UIAlertView alloc]
+          initWithTitle:kFailurePostTitle
+          message:@"Please login to post your comment"
+          delegate:nil
+          cancelButtonTitle:@"OK"
+          otherButtonTitles:nil] show];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self postContent];
+    }
 }
 
 @end
