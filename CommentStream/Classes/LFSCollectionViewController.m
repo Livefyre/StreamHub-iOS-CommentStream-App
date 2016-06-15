@@ -301,14 +301,7 @@ const static char kAttributedTextValueKey;
     UIBarButtonItem *barBtnRight = [[UIBarButtonItem alloc] initWithCustomView:btnRight];
     self.navigationItem.rightBarButtonItem = barBtnRight;
 }
--(void)logout{
 
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"lftoken"];
-    [dict removeObjectForKey:@"lftoken"];
-    _collection = [[NSDictionary alloc]initWithDictionary:dict];
-    [self setRightBarFromStatus];
-}
 /*
  <key>environment</key>
  <string>qa-ext.livefyre.com</string>
@@ -1019,7 +1012,7 @@ const static char kAttributedTextValueKey;
     [self.postViewController setAvatarImage:self.placeholderImage];
     [self.postViewController setUser:self.user];
     [self.postViewController clearContent];
-    
+    [self.postViewController updateProfile];
     [self.navigationController presentViewController:self.postViewController
                                             animated:YES
                                           completion:nil];
@@ -1145,11 +1138,24 @@ const static char kAttributedTextValueKey;
     }
     _collection = [[NSDictionary alloc]initWithDictionary:dict];
     [self setRightBarFromStatus];
+    [self authenticateUser];
 
 }
 -(void)didFailLFRequest{
     NSLog(@"Fail");
     [self setRightBarFromStatus];
+
+}
+-(void)logout{
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"lftoken"];
+    [dict removeObjectForKey:@"lftoken"];
+    _collection = [[NSDictionary alloc]initWithDictionary:dict];
+    [self setRightBarFromStatus];
+    self.user = nil;
+    self.postViewController.user = nil;
+    [self.postViewController clearContent];
 
 }
 @end
