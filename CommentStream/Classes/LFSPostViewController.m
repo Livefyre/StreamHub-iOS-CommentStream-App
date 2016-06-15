@@ -667,7 +667,7 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
 
 - (IBAction)postClicked:(UIBarButtonItem *)sender{
     NSString *userToken = [self.collection objectForKey:@"lftoken"];
-    if (userToken != nil) {
+    if (userToken == nil) {
         static NSString* const kFailurePostTitle = @"Failed to post content";
         
         [[[UIAlertView alloc]
