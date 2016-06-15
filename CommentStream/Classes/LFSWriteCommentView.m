@@ -415,8 +415,8 @@ static const CGFloat kDetailRemoteButtonWidth = 20.0f;
     // (i.e. twitter handle)
     
     LFSResource *profileLocal = self.profileLocal;
-    NSString *headerTitle = profileLocal.displayString;
-    NSString *headerSubtitle = profileLocal.identifier;
+    NSString *headerTitle = profileLocal.displayString? profileLocal.displayString:@"";
+    NSString *headerSubtitle = profileLocal.identifier?profileLocal.identifier: @"";
     id headerAccessory = profileLocal.attributeObject;
     
     if (headerTitle && !headerSubtitle && !headerAccessory)
@@ -537,6 +537,11 @@ static const CGFloat kDetailRemoteButtonWidth = 20.0f;
     // layout avatar view
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:profileLocal.iconURLString]
                          placeholderImage:profileLocal.icon];
+}
+
+-(void)updateUserFromProfile:(LFSResource*) profile{
+    _profileLocal = profile;
+    [self layoutSubviews];
 }
 
 #pragma mark -

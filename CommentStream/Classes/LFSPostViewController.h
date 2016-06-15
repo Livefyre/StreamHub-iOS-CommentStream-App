@@ -30,7 +30,7 @@
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 
 -(void)clearContent;
-
+-(void)updateProfile;
 @end
 
 
