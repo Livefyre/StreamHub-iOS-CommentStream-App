@@ -20,7 +20,7 @@
 
 @property (nonatomic, assign) UIImage *attachmentImage;
 -(void)setAttachmentImageWithURL:(NSURL*)url;
-
+-(void)updateUserFromProfile:(LFSResource*) profile;
 @end
 
 

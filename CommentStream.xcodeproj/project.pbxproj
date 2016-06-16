@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		938974CA84AA4DFDBBCCCD67 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B24C48529EA4C478A1414B0 /* libPods.a */; };
+		3F52BE6FB86BD11336A27361 /* libPods-CommentStream.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B992C9A4B50BF03B850F7B /* libPods-CommentStream.a */; };
 		EF05E46A181CD36700153F42 /* LFSOembed.m in Sources */ = {isa = PBXBuildFile; fileRef = EF05E469181CD36700153F42 /* LFSOembed.m */; };
 		EF0CEBB91950570E0003BF4B /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF0CEBB81950570E0003BF4B /* AssetsLibrary.framework */; };
 		EF1179D117B5BE3F00D59E54 /* LFSConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF1179D017B5BE3F00D59E54 /* LFSConfig.plist */; };
@@ -53,7 +53,10 @@
 /* Begin PBXFileReference section */
 		0B24C48529EA4C478A1414B0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		49648499F42778C933B8A5B4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		61EFCFA76ABB36A70C0634CC /* Pods-CommentStream.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommentStream.release.xcconfig"; path = "Pods/Target Support Files/Pods-CommentStream/Pods-CommentStream.release.xcconfig"; sourceTree = "<group>"; };
 		A3E7F971B7674CE90141022F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A8B992C9A4B50BF03B850F7B /* libPods-CommentStream.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CommentStream.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1A73069EE68CBC0B12350E7 /* Pods-CommentStream.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommentStream.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommentStream/Pods-CommentStream.debug.xcconfig"; sourceTree = "<group>"; };
 		EF05E468181CD36700153F42 /* LFSOembed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFSOembed.h; path = Classes/LFSOembed.h; sourceTree = "<group>"; };
 		EF05E469181CD36700153F42 /* LFSOembed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFSOembed.m; path = Classes/LFSOembed.m; sourceTree = "<group>"; };
 		EF0CEBB81950570E0003BF4B /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -135,12 +138,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				938974CA84AA4DFDBBCCCD67 /* libPods.a in Frameworks */,
 				EF0CEBB91950570E0003BF4B /* AssetsLibrary.framework in Frameworks */,
 				EFB27A9C17EE3FFA008AD723 /* QuartzCore.framework in Frameworks */,
 				EF7BB6DE17B2B718009E2E70 /* CoreGraphics.framework in Frameworks */,
 				EF7BB6E017B2B718009E2E70 /* UIKit.framework in Frameworks */,
 				EF7BB6DC17B2B718009E2E70 /* Foundation.framework in Frameworks */,
+				3F52BE6FB86BD11336A27361 /* libPods-CommentStream.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +155,8 @@
 			children = (
 				A3E7F971B7674CE90141022F /* Pods.debug.xcconfig */,
 				49648499F42778C933B8A5B4 /* Pods.release.xcconfig */,
+				E1A73069EE68CBC0B12350E7 /* Pods-CommentStream.debug.xcconfig */,
+				61EFCFA76ABB36A70C0634CC /* Pods-CommentStream.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				EF7BB6DD17B2B718009E2E70 /* CoreGraphics.framework */,
 				EF7BB6DF17B2B718009E2E70 /* UIKit.framework */,
 				0B24C48529EA4C478A1414B0 /* libPods.a */,
+				A8B992C9A4B50BF03B850F7B /* libPods-CommentStream.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -309,12 +315,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF7BB70A17B2B718009E2E70 /* Build configuration list for PBXNativeTarget "CommentStream" */;
 			buildPhases = (
-				CE93F0988B024B72ABF2BB39 /* Check Pods Manifest.lock */,
+				CE93F0988B024B72ABF2BB39 /* 📦 Check Pods Manifest.lock */,
 				EF7BB6D417B2B718009E2E70 /* Sources */,
 				EF7BB6D517B2B718009E2E70 /* Frameworks */,
 				EF7BB6D617B2B718009E2E70 /* Resources */,
-				0A76DB356FC240B0A8ECF43A /* Copy Pods Resources */,
-				4C892B5591FEACF32860C22C /* Embed Pods Frameworks */,
+				0A76DB356FC240B0A8ECF43A /* 📦 Copy Pods Resources */,
+				4C892B5591FEACF32860C22C /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -373,44 +379,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0A76DB356FC240B0A8ECF43A /* Copy Pods Resources */ = {
+		0A76DB356FC240B0A8ECF43A /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CommentStream/Pods-CommentStream-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4C892B5591FEACF32860C22C /* Embed Pods Frameworks */ = {
+		4C892B5591FEACF32860C22C /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CommentStream/Pods-CommentStream-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CE93F0988B024B72ABF2BB39 /* Check Pods Manifest.lock */ = {
+		CE93F0988B024B72ABF2BB39 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -557,7 +563,7 @@
 		};
 		EF7BB70B17B2B718009E2E70 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3E7F971B7674CE90141022F /* Pods.debug.xcconfig */;
+			baseConfigurationReference = E1A73069EE68CBC0B12350E7 /* Pods-CommentStream.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -581,7 +587,7 @@
 		};
 		EF7BB70C17B2B718009E2E70 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49648499F42778C933B8A5B4 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 61EFCFA76ABB36A70C0634CC /* Pods-CommentStream.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

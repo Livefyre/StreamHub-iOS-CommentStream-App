@@ -422,17 +422,6 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
     
 	// Do any additional setup after loading the view.
 
-    LFSAuthorProfile *author = self.user.profile;
-    NSString *detailString = (author.twitterHandle ? [@"@" stringByAppendingString:author.twitterHandle] : nil);
-    LFSResource *headerInfo = [[LFSResource alloc]
-                               initWithIdentifier:detailString
-                               attribute:nil
-                               displayString:author.displayName
-                               icon:self.avatarImage];
-    [headerInfo setIconURLString:author.avatarUrlString75];
-    
-    [self.writeCommentView setDelegate:self];
-    [self.writeCommentView setProfileLocal:headerInfo];
     
     _oembeds = [[NSMutableDictionary alloc] init];
 }
@@ -440,6 +429,20 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    LFSAuthorProfile *author = self.user.profile;
+//    NSString *detailString = (author.twitterHandle ? [@"@" stringByAppendingString:author.twitterHandle] : nil);
+//    LFSResource *headerInfo = [[LFSResource alloc]
+//                               initWithIdentifier:detailString
+//                               attribute:nil
+//                               displayString:author.displayName
+//                               icon:self.avatarImage];
+//    [headerInfo setIconURLString:author.avatarUrlString75];
+//    
+//    [self.writeCommentView setDelegate:self];
+//    [self.writeCommentView setProfileLocal:headerInfo];
+//    [self.writeCommentView updateUserFromProfile:headerInfo];
+    
+    [self updateProfile];
     
     if (self.replyToContent != nil) {
         [self.postNavbar.topItem setTitle:@"Reply"];
@@ -455,6 +458,21 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
     if (_pauseKeyboard == NO) {
         [self.writeCommentView.textView becomeFirstResponder];
     }
+}
+
+-(void)updateProfile{
+    LFSAuthorProfile *author = self.user.profile;
+    NSString *detailString = (author.twitterHandle ? [@"@" stringByAppendingString:author.twitterHandle] : nil);
+    LFSResource *headerInfo = [[LFSResource alloc]
+                               initWithIdentifier:detailString
+                               attribute:nil
+                               displayString:author.displayName
+                               icon:self.avatarImage];
+    [headerInfo setIconURLString:author.avatarUrlString75];
+    
+    [self.writeCommentView setDelegate:self];
+    [self.writeCommentView setProfileLocal:headerInfo];
+    [self.writeCommentView updateUserFromProfile:headerInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -535,6 +553,7 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
 -(void)clearContent
 {
     [_oembeds removeAllObjects];
+    [self updateProfile];
     [self.writeCommentView setAttachmentImage:nil];
     [self.writeCommentView.textView setText:@""];
 }
@@ -646,9 +665,21 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)postClicked:(UIBarButtonItem *)sender
-{
-    [self postContent];
+- (IBAction)postClicked:(UIBarButtonItem *)sender{
+    NSString *userToken = [self.collection objectForKey:@"lftoken"];
+    if (userToken == nil) {
+        static NSString* const kFailurePostTitle = @"Failed to post content";
+        
+        [[[UIAlertView alloc]
+          initWithTitle:kFailurePostTitle
+          message:@"Please login to post your comment"
+          delegate:nil
+          cancelButtonTitle:@"OK"
+          otherButtonTitles:nil] show];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self postContent];
+    }
 }
 
 @end
