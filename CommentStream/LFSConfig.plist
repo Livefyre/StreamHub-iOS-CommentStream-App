@@ -13,96 +13,22 @@
 	</dict>
 	<key>collections</key>
 	<array>
-<!--		<dict>-->
-<!--			<key>_name</key>-->
-<!--			<string>Xbox / Live Stream</string>-->
-<!--			<key>articleId</key>-->
-<!--			<string>xbox-0</string>-->
-<!--		</dict>-->
-<!--		<dict>-->
-<!--			<key>_name</key>-->
-<!--			<string>JavaScript tweets</string>-->
-<!--			<key>environment</key>-->
-<!--			<string>t402.livefyre.com</string>-->
-<!--			<key>network</key>-->
-<!--			<string>labs.fyre.co</string>-->
-<!--			<key>siteId</key>-->
-<!--			<string>315833</string>-->
-<!--			<key>articleId</key>-->
-<!--			<string>example</string>-->
-<!--		</dict>-->
-<!--		<dict>-->
-<!--			<key>_name</key>-->
-<!--			<string>~Writable (user)</string>-->
-<!--			<key>environment</key>-->
-<!--			<string>livefyre.com</string>-->
-<!--			<key>network</key>-->
-<!--			<string>labs.fyre.co</string>-->
-<!--			<key>siteId</key>-->
-<!--			<string>320568</string>-->
-<!--			<key>articleId</key>-->
-<!--			<string>custom-1379372287037</string>-->
-<!--			<key>lftoken</key>-->
-<!--			<string>eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJkb21haW4iOiAibGFicy5meXJlLmNvIiwgImV4cGlyZXMiOiAxNDI3ODczNDMwLjIwNDI1NiwgInVzZXJfaWQiOiAiY29tbWVudGVyXzAifQ.xOYm5bj_M65vYSU2eLMYYt8GteaaHgNUTq55KwJnixg</string>-->
-<!--		</dict>-->
-<!--		<dict>-->
-<!--			<key>_name</key>-->
-<!--			<string>~Writable (mod)</string>-->
-<!--			<key>environment</key>-->
-<!--			<string>livefyre.com</string>-->
-<!--			<key>network</key>-->
-<!--			<string>labs.fyre.co</string>-->
-<!--			<key>siteId</key>-->
-<!--			<string>320568</string>-->
-<!--			<key>articleId</key>-->
-<!--			<string>custom-1379372287037</string>-->
-<!--			<key>lftoken</key>-->
-<!--			<string>eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJkb21haW4iOiAibGFicy5meXJlLmNvIiwgImV4cGlyZXMiOiAxMDE0MDM3Mjg1MTIuNTk0MTYsICJ1c2VyX2lkIjogImRlbW8wIn0.0u1odupwow0tzBFhNWYG1Vk8URLncMHYQCBhjjdBBL8</string>-->
-<!--		</dict>-->
-<!--		<dict>-->
-<!--			<key>_name</key>-->
-<!--			<string>UAT / National Punctuation Day</string>-->
-<!--			<key>environment</key>-->
-<!--			<string>qa-ext.livefyre.com</string>-->
-<!--			<key>network</key>-->
-<!--			<string>livefyre.com</string>-->
-<!--			<key>siteId</key>-->
-<!--			<string>290596</string>-->
-<!--			<key>articleId</key>-->
-<!--			<string>113</string>-->
-<!--		</dict>-->
-<!--		<dict>-->
-<!--			<key>_name</key>-->
-<!--			<string>demon in the box</string>-->
-<!--			<key>environment</key>-->
-<!--			<string>t402.livefyre.com</string>-->
-<!--			<key>network</key>-->
-<!--			<string>livefyre.com</string>-->
-<!--			<key>siteId</key>-->
-<!--			<string>303613</string>-->
-<!--			<key>articleId</key>-->
-<!--			<string>228</string>-->
-<!--		</dict>-->
-        <dict>
-            <key>_name</key>
-            <string>LF Login</string>
-            <key>environment</key>
-            <string>qa-ext.livefyre.com</string>
-            <key>network</key>
-            <string>qa-blank.fyre.co</string>
-            <key>siteId</key>
-            <string>291345</string>
-            <key>articleId</key>
-            <string>designer-app-1444956522234</string>
-            <key>needLogin</key>
-            <true/>
-            <key>next</key>
-            <string>aHR0cDovL2xpdmVmeXJlLWNkbi1kZXYuczMuYW1hem9uYXdzLmNvbS9kZW1vcy9sZmVwMi1jb21tZW50cy5odG1s</string>
-            
-            <key>lftoken</key>
-            <string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJxYS1ibGFuay5meXJlLmNvIiwiZXhwaXJlcyI6MTQ2NDk0MTMzMS4zMTUxOTcsInVzZXJfaWQiOiI1NzI0M2Y0MWMyOWMxYjQyMDc1MTA4YzAifQ.pD-54bm5lN_pJCTMcwupqVXFgB8amOKL2xW6bgT9KxM</string>
-        </dict>
-
+		<dict>
+			<key>_name</key>
+			<string>LF Login</string>
+			<key>environment</key>
+			<string>qa-ext.livefyre.com</string>
+			<key>network</key>
+			<string>qa-blank.fyre.co</string>
+			<key>siteId</key>
+			<string>291345</string>
+			<key>articleId</key>
+			<string>designer-app-1444956522234</string>
+			<key>needLogin</key>
+			<true/>
+			<key>next</key>
+			<string>aHR0cDovL2xpdmVmeXJlLWNkbi1kZXYuczMuYW1hem9uYXdzLmNvbS9kZW1vcy9sZmVwMi1jb21tZW50cy5odG1s</string>
+		</dict>
 	</array>
 </dict>
 </plist>
