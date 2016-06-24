@@ -13,7 +13,7 @@ pod 'OHAttributedLabel', '~> 3.5.3'
 #pod 'StreamHub-iOS-SDK', :git => 'https://github.com/Livefyre/StreamHub-iOS-SDK.git'
 pod 'StreamHub-iOS-SDK', :path => '../StreamHub-iOS-SDK/'
 
-pod 'FilepickerSDK', '~> 2.7.3'
+pod 'FilepickerSDK', '2.7.3'
 #pod 'FilepickerSDK', :path => '../../../ios-picker/'
 
 pod 'LFAsyncDictionary', '~> 0.1.0a'

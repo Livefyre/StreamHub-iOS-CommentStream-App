@@ -261,31 +261,19 @@ const static char kAttributedTextValueKey;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if([_collection valueForKey:@"needLogin"]){
-        [self setRightBarFromStatus];
-    }
-    NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"lftoken"];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-
-    if(token){
-        [dict setValue:token forKey:@"lftoken"];
-    }
-    _collection = [[NSDictionary alloc] initWithDictionary:dict];
+    // Need to check and set lftoken to collection
+    
+    [self checkAndSetLFTokenOnCollection];
+    [self setRightBarFromStatus];
     [self authenticateUser];
     [self startStreamWithBoostrap];
 }
 -(void)setRightBarFromStatus{
-    if([_collection valueForKey:@"needLogin"]){
-        NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"lftoken"];
-        if(token){
-            [self setRightBarWithName:@"Logout"];
-        }else{
-            [self setRightBarWithName:@"Login"];
-        }
+    if([_collection valueForKey:@"lftoken"] != nil){
+        [self setRightBarWithName:@"Logout"];
     }else{
-        self.navigationItem.rightBarButtonItem = nil;
+        [self setRightBarWithName:@"Login"];
     }
-
 }
 
 -(void)setRightBarWithName:(NSString*)status{
@@ -302,16 +290,6 @@ const static char kAttributedTextValueKey;
     self.navigationItem.rightBarButtonItem = barBtnRight;
 }
 
-/*
- <key>environment</key>
- <string>qa-ext.livefyre.com</string>
- <key>network</key>
- <string>qa-blank.fyre.co</string>
- <key>siteId</key>
- <string>291345</string>
- <key>articleId</key>
- <string>designer-app-1444956522234</string>
- */
 
 -(void)callAuth:(UIButton*)sender{
     NSString *environment = [_collection valueForKey:@"environment"];
@@ -1126,30 +1104,50 @@ const static char kAttributedTextValueKey;
 
 -(void)didReceiveLFAuthToken:(id)profile{
     NSLog(@"%@",profile);
-    NSData *data = [NSData dataWithBase64String:profile];
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
-                                                         options:kNilOptions
-                                                           error:&error];
+    NSDictionary *json = [self serializeProfileString:profile];
+    
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
     if([json valueForKey:@"token"]){
-        [[NSUserDefaults standardUserDefaults] setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
         [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
     }
     _collection = [[NSDictionary alloc]initWithDictionary:dict];
     [self setRightBarFromStatus];
     [self authenticateUser];
-
 }
+
+-(NSDictionary*)serializeProfileString:(NSString*)profile{
+    NSData *data = [NSData dataWithBase64String:profile];
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
+                                                           error:&error];
+    return json;
+}
+
 -(void)didFailLFRequest{
     NSLog(@"Fail");
     [self setRightBarFromStatus];
 
 }
+
+-(void)checkAndSetLFTokenOnCollection{
+
+    if([LFAuthViewController isLoggedin]){
+        NSString *profileCookieString = [LFAuthViewController getLFProfile];
+        NSDictionary *json = [self serializeProfileString:profileCookieString];
+        if([json valueForKey:@"token"] != nil){
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+            [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
+            _collection = [[NSDictionary alloc] initWithDictionary:dict];
+
+        }
+        
+    }
+}
 -(void)logout{
+    [LFAuthViewController logout];
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"lftoken"];
     [dict removeObjectForKey:@"lftoken"];
     _collection = [[NSDictionary alloc]initWithDictionary:dict];
     [self setRightBarFromStatus];
