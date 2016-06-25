@@ -340,11 +340,6 @@
 				CLASSPREFIX = LF;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Livefyre;
-				TargetAttributes = {
-					EF7BB6D717B2B718009E2E70 = {
-						DevelopmentTeam = 9697AX55KQ;
-					};
-				};
 			};
 			buildConfigurationList = EF7BB6D317B2B718009E2E70 /* Build configuration list for PBXProject "CommentStream" */;
 			compatibilityVersion = "Xcode 3.2";
