@@ -27,7 +27,7 @@
 			<key>needLogin</key>
 			<true/>
 			<key>next</key>
-			<string>aHR0cDovL2xpdmVmeXJlLWNkbi1kZXYuczMuYW1hem9uYXdzLmNvbS9kZW1vcy9sZmVwMi1jb21tZW50cy5odG1s</string>
+			<string>http://livefyre-cdn-dev.s3.amazonaws.com/demos/lfep2-comments.html</string>
 		</dict>
 	</array>
 </dict>

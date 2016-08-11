@@ -385,6 +385,8 @@ static NSString* const kPhotoActionsArray[LFS_PHOTO_ACTIONS_LENGTH] =
 -(void)didClickAddPhotoButton
 {
     [self.actionSheet showInView:self.view];
+    [self.writeCommentView.textView resignFirstResponder];
+
 }
 
 #pragma mark - UIViewController
