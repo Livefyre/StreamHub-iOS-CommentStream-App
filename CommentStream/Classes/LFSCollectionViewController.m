@@ -1102,26 +1102,14 @@ const static char kAttributedTextValueKey;
              withAuthors:[responseObject objectForKey:@"authors"]];
 }
 
--(void)didReceiveLFAuthToken:(id)profile{
-    NSLog(@"%@",profile);
-    NSDictionary *json = [self serializeProfileString:profile];
+-(void)didReceiveLFAuthToken:(NSString*)token{
+    NSLog(@"%@",token);
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-    if([json valueForKey:@"token"]){
-        [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
-    }
+    [dict setValue:token forKey:@"lftoken"];
     _collection = [[NSDictionary alloc]initWithDictionary:dict];
     [self setRightBarFromStatus];
     [self authenticateUser];
-}
-
--(NSDictionary*)serializeProfileString:(NSString*)profile{
-    NSData *data = [NSData dataWithBase64String:profile];
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
-                                                         options:kNilOptions
-                                                           error:&error];
-    return json;
 }
 
 -(void)didFailLFRequest{
@@ -1131,17 +1119,11 @@ const static char kAttributedTextValueKey;
 }
 
 -(void)checkAndSetLFTokenOnCollection{
-
-    if([LFAuthViewController isLoggedin]){
-        NSString *profileCookieString = [LFAuthViewController getLFProfile];
-        NSDictionary *json = [self serializeProfileString:profileCookieString];
-        if([json valueForKey:@"token"] != nil){
-            NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-            [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
-            _collection = [[NSDictionary alloc] initWithDictionary:dict];
-
-        }
-        
+    NSString *token = [LFAuthViewController getToken];
+    if(token != nil){
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+        [dict setValue:token forKey:@"lftoken"];
+        _collection = [[NSDictionary alloc] initWithDictionary:dict];
     }
 }
 -(void)logout{
