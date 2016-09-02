@@ -1126,6 +1126,43 @@ const static char kAttributedTextValueKey;
         _collection = [[NSDictionary alloc] initWithDictionary:dict];
     }
 }
+
+-(void)checkTokenExpairation:(NSString*)token{
+    NSArray *segments = [token componentsSeparatedByString:@"."];
+    NSString *base64string = [segments objectAtIndex:1];
+    NSLog(@"%@",base64string);
+    int requiredLength = (int)(4 * ceil((float)[base64string length] / 4.0));
+    int nbrPaddings = requiredLength - [base64string length];
+    if (nbrPaddings > 0) {
+        NSString *padding =
+        [[NSString string] stringByPaddingToLength:nbrPaddings
+                                        withString:@"=" startingAtIndex:0];
+        base64string = [base64string stringByAppendingString:padding];
+    }
+    
+    base64string = [base64string stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
+    base64string = [base64string stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+    
+    NSData *decodedData =
+    [[NSData alloc] initWithBase64EncodedString:base64string options:0];
+    NSString *decodedString =
+    [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+    
+    
+    NSDictionary *jsonDictionary =
+    [NSJSONSerialization JSONObjectWithData:[decodedString
+                                             dataUsingEncoding:NSUTF8StringEncoding]
+                                    options:0 error:nil];
+    NSDate *date = [ self getJSONDate: [[jsonDictionary valueForKey:@"expires"] doubleValue]];
+    if ([[NSDate new] compare:date] == NSOrderedDescending) {
+        [self logout];
+    }
+}
+- (NSDate *) getJSONDate:(double)expiredate{
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:expiredate];
+    return date;
+}
 -(void)logout{
     [LFAuthViewController logout];
     
