@@ -1102,27 +1102,18 @@ const static char kAttributedTextValueKey;
              withAuthors:[responseObject objectForKey:@"authors"]];
 }
 
--(void)didReceiveLFAuthToken:(id)profile{
-    NSLog(@"%@",profile);
-    NSDictionary *json = [self base64toJSON:profile];
+
+-(void)didReceiveLFAuthToken:(NSString*)token{
+    NSLog(@"%@",token);
+
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-    if([json valueForKey:@"token"]){
-        [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
-    }
+    [dict setValue:token forKey:@"lftoken"];
     _collection = [[NSDictionary alloc]initWithDictionary:dict];
     [self setRightBarFromStatus];
     [self authenticateUser];
 }
 
--(NSDictionary*)base64toJSON:(NSString*)baseString{
-    NSData *data = [NSData dataWithBase64String:baseString];
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
-                                                         options:kNilOptions
-                                                           error:&error];
-    return json;
-}
 
 -(void)didFailLFRequest{
     NSLog(@"Fail");
@@ -1131,20 +1122,14 @@ const static char kAttributedTextValueKey;
 }
 
 -(void)checkAndSetLFTokenOnCollection{
-
-    if([LFAuthViewController isLoggedin]){
-        NSString *profileCookieString = [LFAuthViewController getLFProfile];
-        NSDictionary *json = [self base64toJSON:profileCookieString];
-        if([json valueForKey:@"token"] != nil){
-            [self checkTokenExpairation:[json valueForKey:@"token"]];
-            NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-            [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
-            _collection = [[NSDictionary alloc] initWithDictionary:dict];
-
-        }
-        
+    NSString *token = [LFAuthViewController getToken];
+    if(token != nil){
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+        [dict setValue:token forKey:@"lftoken"];
+        _collection = [[NSDictionary alloc] initWithDictionary:dict];
     }
 }
+
 
 -(void)checkTokenExpairation:(NSString*)token{
     NSArray *segments = [token componentsSeparatedByString:@"."];
@@ -1166,8 +1151,8 @@ const static char kAttributedTextValueKey;
     [[NSData alloc] initWithBase64EncodedString:base64string options:0];
     NSString *decodedString =
     [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
-
-
+    
+    
     NSDictionary *jsonDictionary =
     [NSJSONSerialization JSONObjectWithData:[decodedString
                                              dataUsingEncoding:NSUTF8StringEncoding]
@@ -1177,12 +1162,13 @@ const static char kAttributedTextValueKey;
         [self logout];
     }
 }
-
 - (NSDate *) getJSONDate:(double)expiredate{
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:expiredate];
-        return date;
+    return date;
 }
+
+
 
 -(void)logout{
     [LFAuthViewController logout];
