@@ -1102,8 +1102,10 @@ const static char kAttributedTextValueKey;
              withAuthors:[responseObject objectForKey:@"authors"]];
 }
 
+
 -(void)didReceiveLFAuthToken:(NSString*)token{
     NSLog(@"%@",token);
+
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
     [dict setValue:token forKey:@"lftoken"];
@@ -1111,6 +1113,7 @@ const static char kAttributedTextValueKey;
     [self setRightBarFromStatus];
     [self authenticateUser];
 }
+
 
 -(void)didFailLFRequest{
     NSLog(@"Fail");
@@ -1126,6 +1129,7 @@ const static char kAttributedTextValueKey;
         _collection = [[NSDictionary alloc] initWithDictionary:dict];
     }
 }
+
 
 -(void)checkTokenExpairation:(NSString*)token{
     NSArray *segments = [token componentsSeparatedByString:@"."];
@@ -1163,6 +1167,9 @@ const static char kAttributedTextValueKey;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:expiredate];
     return date;
 }
+
+
+
 -(void)logout{
     [LFAuthViewController logout];
     
