@@ -18,6 +18,7 @@
 
 #import "LFSAppDelegate.h"
 #import "LFSAttributedTextCell.h"
+#import <Rainforest/Rainforest.h>
 
 typedef NS_ENUM(NSUInteger, kTwitterAppState) {
     kTwitterAppStateUnknown = 0u,
@@ -126,6 +127,7 @@ typedef NS_ENUM(NSUInteger, kTwitterAppState) {
 #pragma mark - Lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[Rainforest shared] bootstrap];
     // Override point for customization after application launch.
     OHAttributedLabel *labelAppearance = [OHAttributedLabel appearance];
     [labelAppearance setLinkColor:[UIColor grayColor]];
