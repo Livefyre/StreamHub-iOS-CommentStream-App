@@ -178,7 +178,7 @@ const static char kAttributedTextValueKey;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-
+    
     _content = [[LFSContentCollection alloc] init];
     [_content setDelegate:self];
     
@@ -208,11 +208,11 @@ const static char kAttributedTextValueKey;
     _postCommentField = [[LFSTextField alloc]
                          initWithFrame:
                          CGRectMake(0.f, 0.f, textFieldWidth, (isPortrait ? 30.f : 18.f))];
-
+    
     [_postCommentField setDelegate:self];
     [_postCommentField setPlaceholder:@"Write a comment…"];
-
-
+    
+    
     UIBarButtonItem *writeCommentItem = [[UIBarButtonItem alloc]
                                          initWithCustomView:_postCommentField];
     [self setToolbarItems:
@@ -295,7 +295,7 @@ const static char kAttributedTextValueKey;
     NSString *environment = [_collection valueForKey:@"environment"];
     NSString *network = [_collection valueForKey:@"network"];
     NSString *next = [_collection valueForKey:@"next"];
-
+    
     LFAuthViewController *avc =[[LFAuthViewController alloc] initWithEnvironment:environment network:network next:next];
     avc.delegate=self;
     [self presentViewController:avc animated:YES completion:^{
@@ -339,15 +339,15 @@ const static char kAttributedTextValueKey;
     [self.navigationController setDelegate:nil];
     [self.tableView setDelegate:nil];
     [self.tableView setDataSource:nil];
-
+    
     [_postViewController setDelegate:nil];
     _postViewController = nil;
-
+    
     _streamClient = nil;
     _bootstrapClient = nil;
     _writeClient = nil;
     _adminClient = nil;
-
+    
     [_postCommentField setDelegate:nil];
     _postCommentField = nil;
     
@@ -355,7 +355,7 @@ const static char kAttributedTextValueKey;
     [_imageCache removeAllObjects];
     _imageCache = nil;
 #endif
-
+    
     [_content setDelegate:nil];
     _content = nil;
     _container = nil;
@@ -607,7 +607,7 @@ const static char kAttributedTextValueKey;
                                cellHeightForAttributedString:attributedString
                                hasAttachment:(content.firstOembed.contentAttachmentThumbnailUrlString != nil)
                                width:(tableView.bounds.size.width - leftOffset)];
-
+            
             objc_setAssociatedObject(content, &kAtttributedTextHeightKey,
                                      [NSNumber numberWithFloat:cellHeightValue],
                                      OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -701,7 +701,7 @@ const static char kAttributedTextValueKey;
          }
          
      }
-        ////////////////////////////////////////////////////////////////
+     ////////////////////////////////////////////////////////////////
                         onFailure:^(NSOperation *operation, NSError *error)
      {
          // show an error message
@@ -745,11 +745,11 @@ const static char kAttributedTextValueKey;
 }
 
 /*
--(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Optionally kill the image request operation here as the image is no longer needed
-}
-*/
+ -(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Optionally kill the image request operation here as the image is no longer needed
+ }
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -843,17 +843,17 @@ const static char kAttributedTextValueKey;
                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     if (url == nil) { return; }
-
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setResponseSerializer:[AFImageResponseSerializer serializer]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-    {
-        UIImage *image = [(UIImage*)responseObject resizedImageWithContentMode:contentMode bounds:size interpolationQuality:kCGInterpolationDefault];
-        success(operation, image);
-    }
+     {
+         UIImage *image = [(UIImage*)responseObject resizedImageWithContentMode:contentMode bounds:size interpolationQuality:kCGInterpolationDefault];
+         success(operation, image);
+     }
                                      failure:failure];
-
+    
     [self.operationQueue addOperation:operation];
 }
 
@@ -879,7 +879,7 @@ const static char kAttributedTextValueKey;
         // avatarUrl will be nil if URL string is nil or invalid
         [self loadImageWithURL:url
                    scaleToSize:size
-                     contentMode:contentMode
+                   contentMode:contentMode
                        success:^(AFHTTPRequestOperation *operation, UIImage* image) {
                            if (image != nil) {
 #ifdef CACHE_SCALED_IMAGES
@@ -1102,34 +1102,49 @@ const static char kAttributedTextValueKey;
              withAuthors:[responseObject objectForKey:@"authors"]];
 }
 
-
--(void)didReceiveLFAuthToken:(NSString*)token{
-    NSLog(@"%@",token);
-
+-(void)didReceiveLFAuthToken:(id)profile{
+    NSLog(@"%@",profile);
+    NSDictionary *json = [self base64toJSON:profile];
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-    [dict setValue:token forKey:@"lftoken"];
+    if([json valueForKey:@"token"]){
+        [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
+    }
     _collection = [[NSDictionary alloc]initWithDictionary:dict];
     [self setRightBarFromStatus];
     [self authenticateUser];
 }
 
+-(NSDictionary*)base64toJSON:(NSString*)baseString{
+    NSData *data = [NSData dataWithBase64String:baseString];
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
+                                                           error:&error];
+    return json;
+}
 
 -(void)didFailLFRequest{
     NSLog(@"Fail");
     [self setRightBarFromStatus];
-
+    
 }
 
 -(void)checkAndSetLFTokenOnCollection{
-    NSString *token = [LFAuthViewController getToken];
-    if(token != nil){
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
-        [dict setValue:token forKey:@"lftoken"];
-        _collection = [[NSDictionary alloc] initWithDictionary:dict];
+    
+    if([LFAuthViewController isLoggedin]){
+        NSString *profileCookieString = [LFAuthViewController getLFProfile];
+        NSDictionary *json = [self base64toJSON:profileCookieString];
+        if([json valueForKey:@"token"] != nil){
+            [self checkTokenExpairation:[json valueForKey:@"token"]];
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:_collection];
+            [dict setValue:[json valueForKey:@"token"] forKey:@"lftoken"];
+            _collection = [[NSDictionary alloc] initWithDictionary:dict];
+            
+        }
+        
     }
 }
-
 
 -(void)checkTokenExpairation:(NSString*)token{
     NSArray *segments = [token componentsSeparatedByString:@"."];
@@ -1162,13 +1177,12 @@ const static char kAttributedTextValueKey;
         [self logout];
     }
 }
+
 - (NSDate *) getJSONDate:(double)expiredate{
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:expiredate];
     return date;
 }
-
-
 
 -(void)logout{
     [LFAuthViewController logout];
@@ -1180,6 +1194,6 @@ const static char kAttributedTextValueKey;
     self.user = nil;
     self.postViewController.user = nil;
     [self.postViewController clearContent];
-
+    
 }
 @end
