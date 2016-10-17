@@ -127,7 +127,9 @@ typedef NS_ENUM(NSUInteger, kTwitterAppState) {
 #pragma mark - Lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[Rainforest shared] bootstrap];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[Rainforest shared] bootstrap];
+    });
     // Override point for customization after application launch.
     OHAttributedLabel *labelAppearance = [OHAttributedLabel appearance];
     [labelAppearance setLinkColor:[UIColor grayColor]];
