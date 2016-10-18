@@ -47,11 +47,8 @@
 	<true/>
 	<key>Media Cache URL</key>
 	<string>https://d2kmm3vx031a1h.cloudfront.net</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+
+
 	<key>UILaunchStoryboardName</key>
 	<string>Main</string>
 	<key>UIMainStoryboardFile</key>
