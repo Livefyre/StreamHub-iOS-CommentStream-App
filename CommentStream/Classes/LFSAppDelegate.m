@@ -18,6 +18,7 @@
 
 #import "LFSAppDelegate.h"
 #import "LFSAttributedTextCell.h"
+#import <Rainforest/Rainforest.h>
 
 typedef NS_ENUM(NSUInteger, kTwitterAppState) {
     kTwitterAppStateUnknown = 0u,
@@ -134,6 +135,11 @@ typedef NS_ENUM(NSUInteger, kTwitterAppState) {
     LFSAttributedTextCell *cellAppearance = [LFSAttributedTextCell appearance];
     [cellAppearance setCellContentViewColor:[UIColor whiteColor]];
     [cellAppearance setHeaderTitleColor:[UIColor darkGrayColor]];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[Rainforest shared] bootstrap];
+    });
+
     return YES;
 }
 
