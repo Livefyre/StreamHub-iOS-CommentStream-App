@@ -40,6 +40,7 @@
 @property (nonatomic, readonly) LFSStreamClient *streamClient;
 @property (nonatomic, readonly) LFSWriteClient *writeClient;
 
+
 @property (nonatomic, readonly) LFSTextField *postCommentField;
 
 @property (nonatomic, strong) LFSUser *user;
@@ -87,6 +88,7 @@ const static char kAttributedTextValueKey;
 @synthesize adminClient = _adminClient;
 @synthesize writeClient = _writeClient;
 
+
 @synthesize postCommentField = _postCommentField;
 @synthesize collection = _collection;
 @synthesize collectionId = _collectionId;
@@ -106,6 +108,9 @@ const static char kAttributedTextValueKey;
         _adminClient = [LFSAdminClient
                         clientWithNetwork:[self.collection objectForKey:@"network"]
                         environment:[self.collection objectForKey:@"environment"]];
+
+        [self securepinning:_adminClient];
+
     }
     return _adminClient;
 }
@@ -116,6 +121,9 @@ const static char kAttributedTextValueKey;
         _writeClient = [LFSWriteClient
                         clientWithNetwork:[self.collection objectForKey:@"network"]
                         environment:[self.collection objectForKey:@"environment"]];
+
+        [self securepinning:_writeClient];
+
     }
     return _writeClient;
 }
@@ -126,6 +134,8 @@ const static char kAttributedTextValueKey;
         _bootstrapClient = [LFSBootstrapClient
                             clientWithNetwork:[_collection objectForKey:@"network"]
                             environment:[_collection objectForKey:@"environment"] ];
+
+        [self securepinning:_bootstrapClient];
     }
     return _bootstrapClient;
 }
@@ -138,16 +148,32 @@ const static char kAttributedTextValueKey;
         _streamClient = [LFSStreamClient
                          clientWithNetwork:[_collection objectForKey:@"network"]
                          environment:[_collection objectForKey:@"environment"] ];
-        
+        [self securepinning:_streamClient];
+  
         __weak typeof(_content) _weakContent = _content;
         [self.streamClient setResultHandler:^(id responseObject) {
             //NSLog(@"%@", responseObject);
             [_weakContent addContent:[[responseObject objectForKey:@"states"] allValues]
                          withAuthors:[responseObject objectForKey:@"authors"]];
-            
         } success:nil failure:nil];
     }
     return _streamClient;
+}
+
+
+-(void)securepinning :(LFSBaseClient*)client {
+    NSString *bundleCertificate = [[NSBundle mainBundle] pathForResource:@"github.com" ofType:@"cer"];
+    NSData *certifiedData = [NSData dataWithContentsOfFile:bundleCertificate];
+    if (certifiedData){
+        client.reqOpManager.securityPolicy.pinnedCertificates = @[certifiedData];
+    }
+}
+
+
+-(NSData*)getCertificate{
+    NSString *bundleCertificate = [[NSBundle mainBundle] pathForResource:@"github.com" ofType:@"cer"];
+    NSData *certifiedData = [NSData dataWithContentsOfFile:bundleCertificate];
+    return certifiedData;
 }
 
 -(LFSPostViewController*)postViewController

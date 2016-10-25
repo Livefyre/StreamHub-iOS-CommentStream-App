@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F52BE6FB86BD11336A27361 /* libPods-CommentStream.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B992C9A4B50BF03B850F7B /* libPods-CommentStream.a */; };
+		9B9D91951DBF63D8008158E3 /* github.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9B9D91941DBF63D8008158E3 /* github.com.cer */; };
 		9BA386E01DB8F29C001581AB /* Rainforest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B0AF8461DB8E17C0034D038 /* Rainforest.framework */; };
 		9BA386E11DB8F29C001581AB /* Rainforest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B0AF8461DB8E17C0034D038 /* Rainforest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF05E46A181CD36700153F42 /* LFSOembed.m in Sources */ = {isa = PBXBuildFile; fileRef = EF05E469181CD36700153F42 /* LFSOembed.m */; };
@@ -71,6 +72,7 @@
 		49648499F42778C933B8A5B4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		61EFCFA76ABB36A70C0634CC /* Pods-CommentStream.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommentStream.release.xcconfig"; path = "Pods/Target Support Files/Pods-CommentStream/Pods-CommentStream.release.xcconfig"; sourceTree = "<group>"; };
 		9B0AF8461DB8E17C0034D038 /* Rainforest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rainforest.framework; sourceTree = "<group>"; };
+		9B9D91941DBF63D8008158E3 /* github.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = github.com.cer; sourceTree = "<group>"; };
 		A3E7F971B7674CE90141022F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A8B992C9A4B50BF03B850F7B /* libPods-CommentStream.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CommentStream.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A73069EE68CBC0B12350E7 /* Pods-CommentStream.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommentStream.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommentStream/Pods-CommentStream.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +181,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9B9D91931DBF63C0008158E3 /* Certtificates */ = {
+			isa = PBXGroup;
+			children = (
+				9B9D91941DBF63D8008158E3 /* github.com.cer */,
+			);
+			name = Certtificates;
+			sourceTree = "<group>";
+		};
 		EF6683D817BB9785005F5FC3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +246,7 @@
 		EF7BB6E117B2B718009E2E70 /* CommentStream */ = {
 			isa = PBXGroup;
 			children = (
+				9B9D91931DBF63C0008158E3 /* Certtificates */,
 				EFA106B119031C2C002E8411 /* Categories */,
 				EFCB940C17F141F100FB9384 /* Models */,
 				EFCB940D17F1421100FB9384 /* Views */,
@@ -390,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF1179D117B5BE3F00D59E54 /* LFSConfig.plist in Resources */,
+				9B9D91951DBF63D8008158E3 /* github.com.cer in Resources */,
 				EF7BB6F417B2B718009E2E70 /* Images.xcassets in Resources */,
 				EF7BB6E617B2B718009E2E70 /* InfoPlist.strings in Resources */,
 				EFA106C119031D2E002E8411 /* Main.storyboard in Resources */,
