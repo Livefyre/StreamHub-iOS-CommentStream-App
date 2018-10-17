@@ -3,7 +3,7 @@
 //  CommentStream
 //
 //  Created by Eugene Scherba on 10/27/13.
-//  Copyright (c) 2013 Livefyre. All rights reserved.
+//  Copyright (c) 2013 Adobe. All rights reserved.
 //
 
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -40,7 +40,7 @@ LFSOembedType attachmentCodeFromString(NSString *attachmentString) {
 LFSOembedType attachmentCodeFromUTType(NSString* uttypeString)
 {
     // this function converts from UTType (e.g. "public.movie")
-    // to type used in Livefyre API.
+    // to type used in Adobe API.
     if ([uttypeString isEqualToString:(NSString*)kUTTypeImage]
         || [uttypeString isEqualToString:(NSString*)kUTTypeJPEG]
         || [uttypeString isEqualToString:(NSString*)kUTTypeGIF]

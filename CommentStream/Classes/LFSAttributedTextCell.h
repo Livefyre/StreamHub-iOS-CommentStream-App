@@ -3,7 +3,7 @@
 //  CommentStream
 //
 //  Created by Eugene Scherba on 8/14/13.
-//  Copyright (c) 2013 Livefyre. All rights reserved.
+//  Copyright (c) 2013 Adobe. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

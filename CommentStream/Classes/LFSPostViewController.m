@@ -3,7 +3,7 @@
 //  CommentStream
 //
 //  Created by Eugene Scherba on 9/13/13.
-//  Copyright (c) 2013 Livefyre. All rights reserved.
+//  Copyright (c) 2013 Adobe. All rights reserved.
 //
 
 #import <StreamHub-iOS-SDK/LFSWriteClient.h>

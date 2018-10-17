@@ -3,7 +3,7 @@
 //  CommentStream
 //
 //  Created by Eugene Scherba on 11/4/13.
-//  Copyright (c) 2013 Livefyre. All rights reserved.
+//  Copyright (c) 2013 Adobe. All rights reserved.
 //
 
 #ifndef CommentStream_LFSModelMacros_h
