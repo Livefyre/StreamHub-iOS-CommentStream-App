@@ -3,7 +3,7 @@
 //  CommentStream
 //
 //  Created by Eugene Scherba on 5/27/14.
-//  Copyright (c) 2014 Livefyre. All rights reserved.
+//  Copyright (c) 2014 Adobe. All rights reserved.
 //
 
 #import "UIColor+CommentStream.h"
